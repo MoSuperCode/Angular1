@@ -1,22 +1,39 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  showPassword: boolean = false;
 
-  onSubmit() {
-    console.log('Data Send!');
-    console.log('Email:', this.email);
-    console.log('Password:', this.password);
-    console.log('Confirm Password:', this.confirmPassword);
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      alert('Bitte füllen Sie alle Pflichtfelder aus.');
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      alert('Passwörter stimmen nicht überein.');
+      return;
+    }
+
+    if (this.email === 'test@test.at' && this.password === '12345678') {
+      console.log('Login successful.');
+    } else {
+      console.log('Login failed.');
+    }
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 }

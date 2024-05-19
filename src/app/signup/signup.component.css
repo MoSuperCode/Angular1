@@ -1,0 +1,15 @@
+.container {
+  max-width: 600px;
+}
+
+.card {
+  margin-top: 20px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.text-danger {
+  color: red;
+}
