@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../../../auth.service';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  confirmPassword: string = '';
   showPassword: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -21,16 +25,20 @@ export class LoginComponent {
       return;
     }
 
-    if (this.password !== this.confirmPassword) {
-      alert('Passwörter stimmen nicht überein.');
-      return;
-    }
-
-    if (this.email === 'test@test.at' && this.password === '12345678') {
-      console.log('Login successful.');
-    } else {
-      console.log('Login failed.');
-    }
+    this.authService
+      .login({ email: this.email, password: this.password })
+      .subscribe(
+        (response) => {
+          console.log(response);
+          localStorage.setItem('token', response.token);
+          alert('Login erfolgreich');
+          this.router.navigate(['/landing']);
+        },
+        (error) => {
+          console.error(error);
+          alert('Login fehlgeschlagen: ' + error.error.message);
+        }
+      );
   }
 
   toggleShowPassword() {

@@ -1,0 +1,8 @@
+<div class="container mt-5">
+  <h3>Highscores</h3>
+  <ul class="list-group">
+    <li *ngFor="let highscore of highscores" class="list-group-item">
+      {{ highscore.email }}: {{ highscore.score }}
+    </li>
+  </ul>
+</div>

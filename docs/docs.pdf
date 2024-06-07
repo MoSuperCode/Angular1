@@ -1,0 +1,30 @@
+Softwareplanung für FH Technikum Wien API
+Komponenten:
+
+Frontend:
+
+Technologien: Angular, Bootstrap
+Beschreibung: Das Frontend stellt die Benutzeroberfläche für die Registrierung und das Login bereit. Es kommuniziert über HTTP-Anfragen mit dem Backend.
+Routen: /login, /signup
+Backend:
+
+Technologien: Node.js, Express, MongoDB
+Beschreibung: Das Backend stellt die RESTful API zur Verfügung. Es verarbeitet Anfragen vom Frontend und führt CRUD-Operationen auf der Datenbank aus.
+Routen: /users, /users/{userId}
+Datenbank:
+
+Technologien: MongoDB
+Beschreibung: Die Datenbank speichert Benutzerdaten wie E-Mail-Adresse, Passwort, Adresse und Postleitzahl.
+Kommunikation:
+
+Frontend <-> Backend: HTTP-Anfragen (GET, POST, PUT, DELETE)
+Backend <-> Datenbank: Mongoose (MongoDB ODM)
+Variablen:
+
+Benutzerdaten:
+email (String, muss gültige E-Mail-Adresse sein)
+password (String, mindestens 8 Zeichen)
+passwordConfirm (String, muss mit password übereinstimmen)
+company (String, vordefiniert mit "FH Technikum Wien")
+address (String)
+postalCode (String, nur Zahlen)

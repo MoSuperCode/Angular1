@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../../../auth.service';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
@@ -20,6 +23,8 @@ export class SignupComponent {
   };
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -37,8 +42,17 @@ export class SignupComponent {
       return;
     }
 
-    console.log('Registrierung abgesendet', this.userdata);
-    // Hier könntest du eine HTTP-Anfrage senden, um die Daten an den Server zu schicken
+    this.authService.signup(this.userdata).subscribe(
+      (response) => {
+        console.log(response);
+        alert('Registrierung erfolgreich');
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error(error);
+        alert('Registrierung fehlgeschlagen: ' + error.error.message);
+      }
+    );
   }
 
   toggleShowPassword() {
